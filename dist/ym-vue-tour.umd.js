@@ -7538,7 +7538,7 @@ var VStep_component = normalizeComponent(
 
 
 
-var VueTour = {
+var YmVueTour = {
   install: function install(Vue, options) {
     Vue.component(VTour.name, VTour);
     Vue.component(VStep.name, VStep); // Object containing Tour objects (see VTour.vue) where the tour name is used as key
@@ -7546,10 +7546,10 @@ var VueTour = {
     Vue.prototype.$tours = {};
   }
 };
-/* harmony default export */ var src_main = (VueTour);
+/* harmony default export */ var src_main = (YmVueTour);
 
 if (typeof window !== 'undefined' && window.Vue) {
-  window.Vue.use(VueTour);
+  window.Vue.use(YmVueTour);
 }
 // CONCATENATED MODULE: ./node_modules/.pnpm/@vue+cli-service@4.5.15_0f25d1aa8415e98c3e62a4178f3c555d/node_modules/@vue/cli-service/lib/commands/build/entry-lib.js
 

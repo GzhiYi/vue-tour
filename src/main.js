@@ -1,7 +1,7 @@
 import VTour from './components/VTour'
 import VStep from './components/VStep'
 
-const VueTour = {
+const YmVueTour = {
   install (Vue, options) {
     Vue.component(VTour.name, VTour)
     Vue.component(VStep.name, VStep)
@@ -11,8 +11,8 @@ const VueTour = {
   }
 }
 
-export default VueTour
+export default YmVueTour
 
 if (typeof window !== 'undefined' && window.Vue) {
-  window.Vue.use(VueTour)
+  window.Vue.use(YmVueTour)
 }

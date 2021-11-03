@@ -1,5 +1,10 @@
 <template>
-  <div v-bind:class="{ 'v-step--sticky': isSticky }" class="v-step" :id="'v-step-' + hash" :ref="'v-step-' + hash">
+  <div
+    v-bind:class="{ 'v-step--sticky': isSticky }"
+    class="v-step"
+    :id="'v-step-' + hash"
+    :ref="'v-step-' + hash"
+  >
     <slot name="header">
       <div v-if="step.header" class="v-step__header">
         <div v-if="step.header.title" v-html="step.header.title"></div>
@@ -9,20 +14,51 @@
     <slot name="content">
       <div class="v-step__content">
         <div v-if="step.content" v-html="step.content"></div>
-        <div v-else>This is a demo step! The id of this step is {{ hash }} and it targets {{ step.target }}.</div>
+        <div v-else>
+          This is a demo step! The id of this step is {{ hash }} and it targets
+          {{ step.target }}.
+        </div>
       </div>
     </slot>
 
     <slot name="actions">
       <div class="v-step__buttons">
-        <button @click.prevent="skip" v-if="!isLast && isButtonEnabled('buttonSkip')" class="v-step__button v-step__button-skip">{{ labels.buttonSkip }}</button>
-        <button @click.prevent="previousStep" v-if="!isFirst && isButtonEnabled('buttonPrevious')" class="v-step__button v-step__button-previous">{{ labels.buttonPrevious }}</button>
-        <button @click.prevent="nextStep" v-if="!isLast && isButtonEnabled('buttonNext')" class="v-step__button v-step__button-next">{{ labels.buttonNext }}</button>
-        <button @click.prevent="finish" v-if="isLast && isButtonEnabled('buttonStop')" class="v-step__button v-step__button-stop">{{ labels.buttonStop }}</button>
+        <button
+          @click.prevent="skip"
+          v-if="!isLast && isButtonEnabled('buttonSkip')"
+          class="v-step__button v-step__button-skip"
+        >
+          {{ labels.buttonSkip }}
+        </button>
+        <button
+          @click.prevent="previousStep"
+          v-if="!isFirst && isButtonEnabled('buttonPrevious')"
+          class="v-step__button v-step__button-previous"
+        >
+          {{ labels.buttonPrevious }}
+        </button>
+        <button
+          @click.prevent="nextStep"
+          v-if="!isLast && isButtonEnabled('buttonNext')"
+          class="v-step__button v-step__button-next"
+        >
+          {{ labels.buttonNext }}
+        </button>
+        <button
+          @click.prevent="finish"
+          v-if="isLast && isButtonEnabled('buttonStop')"
+          class="v-step__button v-step__button-stop"
+        >
+          {{ labels.buttonStop }}
+        </button>
       </div>
     </slot>
 
-    <div class="v-step__arrow" :class="{ 'v-step__arrow--dark': step.header && step.header.title }" data-popper-arrow></div>
+    <div
+      class="v-step__arrow"
+      :class="{ 'v-step__arrow--dark': step.header && step.header.title }"
+      data-popper-arrow
+    ><div class="spin"><div class="in"></div></div></div>
   </div>
 </template>
 
@@ -106,7 +142,14 @@ export default {
   methods: {
     createStep () {
       if (this.debug) {
-        console.log('[Vue Tour] The target element ' + this.step.target + ' of .v-step[id="' + this.hash + '"] is:', this.targetElement)
+        console.log(
+          '[Vue Tour] The target element ' +
+            this.step.target +
+            ' of .v-step[id="' +
+            this.hash +
+            '"] is:',
+          this.targetElement
+        )
       }
 
       if (this.isSticky) {
@@ -123,7 +166,13 @@ export default {
           )
         } else {
           if (this.debug) {
-            console.error('[Vue Tour] The target element ' + this.step.target + ' of .v-step[id="' + this.hash + '"] does not exist!')
+            console.error(
+              '[Vue Tour] The target element ' +
+                this.step.target +
+                ' of .v-step[id="' +
+                this.hash +
+                '"] does not exist!'
+            )
           }
           this.$emit('targetNotFound', this.step)
           if (this.stopOnFail) {
@@ -151,14 +200,20 @@ export default {
     },
     isHighlightEnabled () {
       if (this.debug) {
-        console.log(`[Vue Tour] Highlight is ${this.params.highlight ? 'enabled' : 'disabled'} for .v-step[id="${this.hash}"]`)
+        console.log(
+          `[Vue Tour] Highlight is ${
+            this.params.highlight ? 'enabled' : 'disabled'
+          } for .v-step[id="${this.hash}"]`
+        )
       }
       return this.params.highlight
     },
     createHighlight () {
       if (this.isHighlightEnabled()) {
         document.body.classList.add(HIGHLIGHT.classes.active)
-        const transitionValue = window.getComputedStyle(this.targetElement).getPropertyValue('transition')
+        const transitionValue = window
+          .getComputedStyle(this.targetElement)
+          .getPropertyValue('transition')
 
         // Make sure our background doesn't flick on transitions
         if (transitionValue !== 'all 0s ease 0s') {
@@ -178,18 +233,25 @@ export default {
       if (this.isHighlightEnabled()) {
         const target = this.targetElement
         const currentTransition = this.targetElement.style.transition
-        this.targetElement.classList.remove(HIGHLIGHT.classes.targetHighlighted)
+        this.targetElement.classList.remove(
+          HIGHLIGHT.classes.targetHighlighted
+        )
         this.targetElement.classList.remove(HIGHLIGHT.classes.targetRelative)
         // Remove our transition when step is finished.
         if (currentTransition.includes(HIGHLIGHT.transition)) {
           setTimeout(() => {
-            target.style.transition = currentTransition.replace(`, ${HIGHLIGHT.transition}`, '')
+            target.style.transition = currentTransition.replace(
+              `, ${HIGHLIGHT.transition}`,
+              ''
+            )
           }, 0)
         }
       }
     },
     isButtonEnabled (name) {
-      return this.params.enabledButtons.hasOwnProperty(name) ? this.params.enabledButtons[name] : true
+      return this.params.enabledButtons.hasOwnProperty(name)
+        ? this.params.enabledButtons[name]
+        : true
     }
   },
   mounted () {
@@ -202,109 +264,164 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .v-step {
-    background: #50596c; /* #ffc107, #35495e */
-    color: white;
-    max-width: 320px;
-    border-radius: 3px;
-    box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px,
-      rgba(0, 0, 0, 0) 0px 0px 0px 0px,
-      rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
-      rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
-    padding: 1rem;
-    pointer-events: auto;
-    text-align: center;
-    z-index: 10000;
+$v-tour-theme: #30BF83;
+.v-step {
+  background: $v-tour-theme;
+  color: white;
+  max-width: 320px;
+  border-radius: 4px;
+  box-shadow: 0px 4px 8px rgba(33, 35, 41, 0.08);
+  padding: 12px 16px;
+  pointer-events: auto;
+  text-align: center;
+  z-index: 10000;
 
-    &--sticky {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+  &--sticky {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 
-      & .v-step__arrow {
-        display: none;
-      }
+    & .v-step__arrow {
+      display: none;
     }
   }
+}
 
-  .v-step__arrow,
-  .v-step__arrow::before {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    background: inherit;
-  }
+.v-step__arrow,
+.v-step__arrow::before {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: inherit;
+}
 
-  .v-step__arrow {
-    visibility: hidden;
+.v-step__arrow {
+  position: relative;
+  visibility: hidden;
 
-    &--dark {
-      &:before {
-        background: #454d5d;
-      }
+  &--dark {
+    &:before {
+      background: $v-tour-theme;
     }
   }
-
-  .v-step__arrow::before {
+}
+.spin {
     visibility: visible;
-    content: '';
-    transform: rotate(45deg);
-    margin-left: -5px;
-  }
-
-  .v-step[data-popper-placement^="top"] > .v-step__arrow {
-    bottom: -5px;
-  }
-
-  .v-step[data-popper-placement^="bottom"] > .v-step__arrow {
-    top: -5px;
-  }
-
-  .v-step[data-popper-placement^="right"] > .v-step__arrow {
-    left: -5px;
-  }
-
-  .v-step[data-popper-placement^="left"] > .v-step__arrow {
-    right: -5px;
-  }
-
-  /* Custom */
-
-  .v-step__header {
-    margin: -1rem -1rem 0.5rem;
-    padding: 0.5rem;
-    background-color: #454d5d;
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
-  }
-
-  .v-step__content {
-    margin: 0 0 1rem 0;
-  }
-
-  .v-step__button {
-    background: transparent;
-    border: .05rem solid white;
-    border-radius: .1rem;
-    color: white;
-    cursor: pointer;
-    display: inline-block;
-    font-size: .8rem;
-    height: 1.8rem;
-    line-height: 1rem;
-    outline: none;
-    margin: 0 0.2rem;
-    padding: .35rem .4rem;
-    text-align: center;
-    text-decoration: none;
-    transition: all .2s ease;
-    vertical-align: middle;
-    white-space: nowrap;
-
-    &:hover {
-      background-color: rgba(white, 0.95);
-      color: #50596c;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 9999px;
+    position: relative;
+    animation: spining 1s infinite;
+    .in {
+      width: 8px;
+      height: 8px;
+      border-radius: 9999px;
+      background-color: $v-tour-theme;
     }
+}
+@keyframes spining {
+  from {
+    width: 8px;
+    height: 8px;
+    margin-left: 4px;
+    margin-top: 4px;
+    background-color: $v-tour-theme;
   }
+  to {
+    width: 24px;
+    height: 24px;
+    margin-left: -4px;
+    margin-top: -4px;
+    background-color: rgba(136, 204, 0, 0);
+  }
+}
+
+.v-step__arrow::before {
+  visibility: visible;
+  content: "";
+  transform: rotate(45deg);
+  margin-left: -5px;
+}
+
+.v-step[data-popper-placement^="top"] > .v-step__arrow {
+  bottom: -5px;
+  .spin {
+    bottom: -20px;
+    left: -3px;
+  }
+}
+
+.v-step[data-popper-placement^="bottom"] > .v-step__arrow {
+  top: -5px;
+  .spin {
+    top: -20px;
+    left: -3px;
+  }
+}
+
+.v-step[data-popper-placement^="right"] > .v-step__arrow {
+  left: -5px;
+  .spin {
+    left: -20px;
+    top: -3px;
+  }
+}
+
+.v-step[data-popper-placement^="left"] > .v-step__arrow {
+  right: -5px;
+  .spin {
+    right: -20px;
+    top: -3px;
+  }
+}
+
+/* Custom */
+
+.v-step__header {
+  background-color: $v-tour-theme;
+  text-align: left;
+  font-size: 16px;
+  font-weight: 600;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+.v-step__content {
+  margin: 4px 0 8px 0;
+  font-size: 14px;
+  text-align: left;
+}
+.v-step__buttons {
+  text-align: right;
+}
+.v-step__button {
+  background: #fff;
+  border-radius: 4px;
+  color: $v-tour-theme;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 12px;
+  height: 28px;
+  line-height: 20px;
+  outline: none;
+  text-align: right;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  vertical-align: middle;
+  white-space: nowrap;
+  border: none;
+  padding: 0 14px;
+
+  &:hover {
+    background-color: rgba(white, 0.9);
+    color: $v-tour-theme;
+  }
+  &:not(:last-child) {
+    margin-right: 8px;
+  }
+}
 </style>

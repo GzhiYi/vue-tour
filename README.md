@@ -1,6 +1,8 @@
 # Vue Tour
 
-[![CircleCI](https://circleci.com/gh/pulsardev/vue-tour/tree/master.svg?style=svg)](https://circleci.com/gh/pulsardev/vue-tour/tree/master)
+# Fork from
+
+[https://github.com/pulsardev/vue-tour](https://github.com/pulsardev/vue-tour)
 
 > Vue Tour is a lightweight, simple and customizable tour plugin for use with Vue.js.
 > It provides a quick and easy way to guide your users through your application.

@@ -30,7 +30,8 @@ export const DEFAULT_OPTIONS = {
     arrowLeft: true
   },
   debug: false,
-  theme: '#30BF83'
+  theme: '#30BF83',
+  onlyTips: false
 }
 
 export const HIGHLIGHT = {

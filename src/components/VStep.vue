@@ -4,7 +4,7 @@
     class="v-step"
     :id="'v-step-' + hash"
     :ref="'v-step-' + hash"
-    :style="{'--theme': theme}"
+    :style="{'--theme': theme, padding: onlyTips ? '4px 12px' : '12px 16px'}"
   >
     <slot name="header">
       <div v-if="step.header" class="v-step__header">
@@ -13,7 +13,7 @@
     </slot>
 
     <slot name="content">
-      <div class="v-step__content">
+      <div class="v-step__content" :style="`margin: ${onlyTips ? '4px 0' : '4px 0 8px 0'}`">
         <div v-if="step.content" v-html="step.content"></div>
         <div v-else>
           This is a demo step! The id of this step is {{ hash }} and it targets
@@ -120,6 +120,10 @@ export default {
     theme: {
       type: String,
       default: '#30BF83'
+    },
+    onlyTips: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
@@ -280,7 +284,6 @@ export default {
   max-width: 320px;
   border-radius: 4px;
   box-shadow: 0px 4px 8px rgba(33, 35, 41, 0.08);
-  padding: 12px 16px;
   pointer-events: auto;
   text-align: center;
   z-index: 10000;
@@ -400,7 +403,6 @@ export default {
 }
 
 .v-step__content {
-  margin: 4px 0 8px 0;
   font-size: 14px;
   text-align: left;
 }

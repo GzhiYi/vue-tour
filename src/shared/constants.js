@@ -29,7 +29,8 @@ export const DEFAULT_OPTIONS = {
     arrowRight: true,
     arrowLeft: true
   },
-  debug: false
+  debug: false,
+  theme: '#30BF83'
 }
 
 export const HIGHLIGHT = {

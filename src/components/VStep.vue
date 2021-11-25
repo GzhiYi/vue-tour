@@ -4,6 +4,7 @@
     class="v-step"
     :id="'v-step-' + hash"
     :ref="'v-step-' + hash"
+    :style="{'--theme': theme}"
   >
     <slot name="header">
       <div v-if="step.header" class="v-step__header">
@@ -115,6 +116,10 @@ export default {
     },
     debug: {
       type: Boolean
+    },
+    theme: {
+      type: String,
+      default: '#30BF83'
     }
   },
   data () {
@@ -137,6 +142,11 @@ export default {
      */
     isSticky () {
       return !this.step.target
+    },
+    cssVars () {
+      return {
+        '--theme': this.theme
+      }
     }
   },
   methods: {
@@ -264,9 +274,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$v-tour-theme: #30BF83;
 .v-step {
-  background: $v-tour-theme;
+  background: var(--theme);
   color: white;
   max-width: 320px;
   border-radius: 4px;
@@ -302,7 +311,7 @@ $v-tour-theme: #30BF83;
 
   &--dark {
     &:before {
-      background: $v-tour-theme;
+      background: var(--theme);
     }
   }
 }
@@ -320,7 +329,7 @@ $v-tour-theme: #30BF83;
       width: 8px;
       height: 8px;
       border-radius: 9999px;
-      background-color: $v-tour-theme;
+      background-color: var(--theme);
     }
 }
 @keyframes spining {
@@ -329,7 +338,7 @@ $v-tour-theme: #30BF83;
     height: 8px;
     margin-left: 4px;
     margin-top: 4px;
-    background-color: $v-tour-theme;
+    background-color: var(--theme);
   }
   to {
     width: 24px;
@@ -382,7 +391,7 @@ $v-tour-theme: #30BF83;
 /* Custom */
 
 .v-step__header {
-  background-color: $v-tour-theme;
+  background-color: var(--theme);
   text-align: left;
   font-size: 16px;
   font-weight: 600;
@@ -401,7 +410,7 @@ $v-tour-theme: #30BF83;
 .v-step__button {
   background: #fff;
   border-radius: 4px;
-  color: $v-tour-theme;
+  color: var(--theme);
   cursor: pointer;
   display: inline-block;
   font-size: 12px;
@@ -418,7 +427,7 @@ $v-tour-theme: #30BF83;
 
   &:hover {
     background-color: rgba(white, 0.9);
-    color: $v-tour-theme;
+    color: var(--theme);
   }
   &:not(:last-child) {
     margin-right: 8px;
